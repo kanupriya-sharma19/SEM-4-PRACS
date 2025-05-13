@@ -1,8 +1,8 @@
 
 #include<stdio.h>
 
-int frame[3],page[11]={1, 2, 3, 2, 4, 1, 5, 2, 1, 6, 7};
-int m=3,n=11;
+int frame[3],page[15]={7, 0, 1, 2, 0, 3, 0, 4, 2, 3, 0, 3, 2, 1, 2 };
+int m=3,n=15;
 
 int checker(int idx)
 {

@@ -16,6 +16,15 @@ struct Processes {
 };
 
 void Priority_Preemptive(struct Processes *process, int n) {
+     for (int i = 0; i < n - 1; i++) {
+        for (int j = i + 1; j < n; j++) {
+            if (process[i].at > process[j].at) {
+                struct Processes temp = process[i];
+                process[i] = process[j];
+                process[j] = temp;
+            }
+        }
+    }
     int current_time = 0;
     int completed = 0;
     int idx = -1;
@@ -105,12 +114,13 @@ void printResults(struct Processes *process, int n) {
 }
 
 int main() {
-    int n = 4;
-    struct Processes process[4] = {
-        {1, 0, 5, 0, 1, 0, 0, 0}, 
+    int n = 5;
+    struct Processes process[5] = {
+        {1, 0, 3, 0, 3, 0, 0, 0}, 
         {2, 1, 4, 0, 2, 0, 0, 0},
-        {3, 2, 2, 0, 3, 0, 0, 0},
-        {4, 4, 1, 0, 4, 0, 0, 0}
+        {3, 2, 6, 0, 4, 0, 0, 0},
+        {4, 3, 4, 0, 6, 0, 0, 0},
+        {5, 5, 2, 0, 10, 0, 0, 0}
     };
 
     Priority_Preemptive(process, n);

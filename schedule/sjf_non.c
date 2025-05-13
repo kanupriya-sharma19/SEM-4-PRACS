@@ -90,12 +90,13 @@ void printResults(struct Processes *process, int n) {
 }
 
 int main() {
-    int n = 4;
-    struct Processes process[4] = {
-        {1, 0, 6, 0, 0, 0},
-        {2, 4, 10, 0, 0, 0},
-        {3, 4, 4, 0, 0, 0},
-        {4, 8, 3, 0, 0, 0}
+    int n = 5;
+    struct Processes process[5] = {
+        {1, 2, 6, 0, 0, 0},
+        {2, 5, 2, 0, 0, 0},
+        {3, 1, 8, 0, 0, 0},
+        {4, 0, 3, 0, 0, 0},
+          {5, 4, 4, 0, 0, 0}
     };
 
     SJF_NonPreemptive(process, n);

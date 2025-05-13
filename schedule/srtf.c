@@ -111,12 +111,12 @@ printf("\n");
 }
 
 int main() {
-    int n = 4;
-    struct Processes process[4] = {
-        {1, 0, 8, 0, 0, 0, 0}, 
-        {2, 4, 10, 0, 0, 0, 0},
-        {3, 4, 3, 0, 0, 0, 0},
-        {4, 10, 4, 0, 0, 0, 0}
+    int n = 3;
+    struct Processes process[3] = {
+        {1, 0, 6, 0, 0, 0, 0}, 
+        {2, 0, 8, 0, 0, 0, 0},
+        {3, 0, 5, 0, 0, 0, 0}
+    
     };
 
     SJF_Preemptive(process, n);
