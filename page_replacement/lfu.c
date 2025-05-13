@@ -1,69 +1,94 @@
-#include <stdio.h>
 
-void LFU(int noPage, int page[], int noFrame, int frame[]) {
-    int i, j, hitCount = 0, faultCount = 0;
-    int frequency[noFrame];  
+#include<stdio.h>
 
-    for (i = 0; i < noFrame; i++) {
-        frame[i] = -1; 
-        frequency[i] = 0; 
+int frame[3],page[11]={1, 2, 3, 2, 4, 1, 5, 2, 1, 6, 7};
+int m=3,n=11;
+
+int checker(int idx)
+{
+    for(int j=0;j<m;j++)
+    {
+        if(frame[j]==idx)
+        {
+            return 1;
+        }
     }
+    return -1;
+}
 
-    printf("Pages\tFrames\t\tHit\n");
-
-    for (i = 0; i < noPage; i++) {
-        int hit = 0;
-
-        for (j = 0; j < noFrame; j++) {
-            if (frame[j] == page[i]) {
-                hit = 1; 
-                hitCount++;
-                frequency[j]++; 
-                break;
+int lfufinder(int idx)
+{int leastfreq=idx-1;int replace=0;
+    for(int j=0;j<m;j++)
+    {int framefreq=0;
+        for(int i=0;i<idx;i++)
+        {
+            if(frame[j]==page[i])
+            {
+                framefreq++;
             }
         }
-
-        if (hit == 0) {
-            int minFreq = frequency[0];
-            int replaceIndex = 0;
-
-            for (j = 1; j < noFrame; j++) {
-                if (frequency[j] < minFreq) {
-                    minFreq = frequency[j];
-                    replaceIndex = j;
-                }
-            }
-
-            frame[replaceIndex] = page[i];
-            frequency[replaceIndex] = 1;
-            faultCount++;
+        if(framefreq<leastfreq)
+        {
+            replace=j;
+            leastfreq=framefreq;
         }
+    }
+    return replace;
+}
 
-        printf("%d\t", page[i]);
-        for (j = 0; j < noFrame; j++) {
-            if (frame[j] != -1)
-                printf("%d ", frame[j]);
+void lfu()
+{
+    int hit=0,miss=0;
+    int count=0;
+    for(int i=0;i<m;i++)frame[i]=-1;
+    for(int i=0;i<n;i++)
+    {
+        int find=checker(page[i]);
+        printf(" %d ",page[i]);
+        if(find==1)
+        {
+            printf(" H ");
+            hit++;
+        }
+        else
+        {
+            miss++;
+            printf(" M ");
+            if(count<3)
+            {
+                frame[count]=page[i];
+                count++;
+            }
             else
-                printf("- ");
+            {
+                int replace=lfufinder(i);
+                frame[replace]=page[i];
+            }
         }
-        printf("\t\t%d\n", hit);
+        for(int j=0;j<m;j++)
+        {
+            if(frame[j]==-1)
+            {
+                printf(" -- ");
+            }
+            else
+            {
+                printf(" %d ",frame[j]);
+            }
+        }
+        printf("\n");
+        
     }
+     float hitPercent = ((float)hit / n) * 100;
+    float faultPercent = ((float)miss / n) * 100;
 
-    float hitPercent = ((float)hitCount / noPage) * 100;
-    float faultPercent = ((float)faultCount / noPage) * 100;
-
-    printf("Page Faults: %d\n", faultCount);
-    printf("Hits: %d\n", hitCount);
+    printf("\nTotal Page Faults: %d\n", miss);
+    printf("Total Hits: %d\n", hit);
     printf("Hit Percent: %.2f%%\n", hitPercent);
     printf("Fault Percent: %.2f%%\n", faultPercent);
 }
 
-int main() {
-    int pages[] = {4, 7, 6, 1, 7, 6, 1, 2, 7, 2};
-    int noPages = sizeof(pages) / sizeof(pages[0]);
-
-    int noFrames = 3;
-    int frames[noFrames];
-    LFU(noPages, pages, noFrames, frames);
-    return 0;
+int main()
+{
+    lfu();
 }

@@ -1,93 +1,87 @@
-#include <stdio.h>
+#include<stdio.h>
+int frame[3],page[9]={1, 2, 1, 0, 3, 0, 4, 2, 4};
+int m=3,n=9;
 
-int findLRU(int time[], int noFrame)
+
+int checker(int idx)
 {
-    int i, min = time[0], index = 0;
-    for (i = 1; i < noFrame; i++)
+    for(int j=0;j<m;j++)
     {
-        if (time[i] < min)
+        if(frame[j]==idx)
         {
-            min = time[i];
-            index = i;
+            return 1;
         }
     }
-    return index;
+    return -1;
 }
 
-void LRU(int noPage, int page[], int noFrame, int frame[])
-{
-    int i, j, hitCount = 0, faultCount = 0;
-    int time[noFrame];
-    int counter = 0;
-
-    for (i = 0; i < noFrame; i++)
+int lru_finder(int idx)
+{int min=0,mintime=idx;
+    for(int j=0;j<m;j++)
     {
-        frame[i] = -1;
-        time[i] = 0;
-    }
-
-    printf("Pages\tFrames\t\tHit\n");
-
-    for (i = 0; i < noPage; i++)
-    {
-        int hit = 0;
-
-        for (j = 0; j < noFrame; j++)
+        for(int i=idx-1;i>=0;i--)
         {
-            if (frame[j] == page[i])
+            if(frame[j]==page[i])
             {
-                counter++;
-                time[j] = counter;
-                hit = 1;
-                hitCount++;
+                if(i<mintime)
+                {
+                   mintime=i;
+                    min=j; 
+                }
                 break;
             }
         }
-
-        if (hit == 0)
-        {
-            if (faultCount < noFrame)
-            {
-                frame[faultCount] = page[i];
-                counter++;
-                time[faultCount] = counter;
-            }
-            else
-            {
-                int indexToReplace = findLRU(time, noFrame);
-                frame[indexToReplace] = page[i];
-                counter++;
-                time[indexToReplace] = counter;
-            }
-            faultCount++;
-        }
-
-        printf("%d\t", page[i]);
-        for (j = 0; j < noFrame; j++)
-        {
-            if (frame[j] != -1)
-                printf("%d ", frame[j]);
-            else
-                printf("- ");
-        }
-        printf("\t\t%d\n", hit);
     }
-
-    float hitPercent = ((float)hitCount / noPage) * 100;
-    float faultPercent = ((float)faultCount / noPage) * 100;
-
-    printf("Page Faults: %d\n", faultCount);
-    printf("Hits: %d\n", hitCount);
-    printf("Hit Percent: %.2f%%\n", hitPercent);
-    printf("Fault Percent: %.2f%%\n", faultPercent);
+    return min;
 }
+
+void lru()
+{
+    int hit=0,miss=0;int count=0;
+    for(int i=0;i<m;i++)
+    {
+        frame[i]=-1;
+    }
+    for(int i=0;i<n;i++)
+    {printf("%d: ",page[i]);
+        int find=checker(page[i]);
+        if(find==1)
+        {
+            printf(" H ");
+            hit++;
+        }
+        else
+        {
+            miss++;
+            printf(" M ");
+            if(count<3)
+            {
+                frame[count]=page[i];
+                count++;
+            }
+            else
+            {
+                int replace=lru_finder(i);
+                frame[replace]=page[i];
+            }
+        }
+        for(int j=0;j<m;j++)
+        {
+            if(frame[j]==-1)
+            {
+                printf(" -- ");
+            }
+            else
+            {
+                printf(" %d ",frame[j]);
+            }
+        }
+        printf("\n");
+    }printf("\nHits: %d\nMisses: %d", hit, miss);
+}
+
 int main()
 {
-    int pages[] = { 4, 7, 6, 1, 7, 6, 1, 2, 7, 2};
-    int noPages = sizeof(pages) / sizeof(pages[0]);
-
-    int noFrames = 3;
-    int frames[noFrames];
-    LRU(noPages, pages, noFrames, frames);
+    lru();
     return 0;
 }
