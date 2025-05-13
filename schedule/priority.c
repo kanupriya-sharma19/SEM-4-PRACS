@@ -49,7 +49,15 @@ void Priority_NonPreemptive(struct Processes *process, int n) {
 
 void printResults(struct Processes *process, int n) {
     float total_tat = 0, total_wt = 0;
-
+    for (int i = 0; i < n - 1; i++) {
+        for (int j = i + 1; j < n; j++) {
+            if (process[i].process_id > process[j].process_id) {
+                struct Processes temp = process[i];
+                process[i] = process[j];
+                process[j] = temp;
+            }
+        }
+    }
     printf("\nProcess\tAT\tBT\tPR\tCT\tTAT\tWT\n");
     for (int i = 0; i < n; i++) {
         printf("P%d\t%d\t%d\t%d\t%d\t%d\t%d\n",

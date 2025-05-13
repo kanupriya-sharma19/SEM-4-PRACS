@@ -22,7 +22,6 @@ int findFarthest(int page[], int frame[], int noPage, int noFrame, int currentIn
         }
         if (found == 0)
         {
-            // This frame's page is never used again
             return i;
         }
     }
@@ -37,7 +36,6 @@ void Optimal(int noPage, int page[], int noFrame, int frame[])
 {
     int i, j, hitCount = 0, faultCount = 0;
 
-    // Initialize all frames to -1
     for (i = 0; i < noFrame; i++)
     {
         frame[i] = -1;
@@ -45,7 +43,6 @@ void Optimal(int noPage, int page[], int noFrame, int frame[])
 
     printf("Pages\tFrames\t\tHit\n");
 
-    // inside Optimal()
 for (i = 0; i < noPage; i++)
 {
     int hit = 0;
@@ -61,7 +58,6 @@ for (i = 0; i < noPage; i++)
 
     if (hit == 0)
     {
-        // Page fault occurred
         if (faultCount < noFrame)
         {
             frame[faultCount] = page[i];

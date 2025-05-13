@@ -1,6 +1,5 @@
 #include <stdio.h>
 
-// Function to calculate the absolute difference between two integers
 int absolute(int a, int b)
 {
     if (a >= b)
@@ -13,7 +12,6 @@ int absolute(int a, int b)
     }
 }
 
-// Function to implement Shortest Seek Time First (SSTF) disk scheduling algorithm
 int shortestSeekTimeFirst(int numMovements, int currentHead, int movements[], int answer[])
 {
     int totalSeekTime = 0;
@@ -50,7 +48,6 @@ int shortestSeekTimeFirst(int numMovements, int currentHead, int movements[], in
     return totalSeekTime;
 }
 
-// Function to print the movements and total seek time
 void printMovements(int numMovements, int currentHead, int answer[], int totalSeekTime)
 {
     printf("\nTrack movements are as follows: \n");

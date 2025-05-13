@@ -1,29 +1,28 @@
 #include <stdio.h>
 int main()
 {
-    // P1, P2, P3, P4, P5 are the Process names here
 
     int n, m, i, j, k;
-    n = 5;                         // Number of processes
-    m = 3;                         // Number of resources
-    int alloc[5][3] = {{0, 1, 0},  // P1 // Allocation Matrix
-                       {2, 0, 0},  // P2
-                       {3, 0, 2},  // P3
-                       {2, 1, 1},  // P4
-                       {0, 0, 2}}; // P5
+    n = 5;                         
+    m = 3;                        
+    int alloc[5][3] = {{0, 1, 0}, 
+                       {2, 0, 0},  
+                       {3, 0, 2}, 
+                       {2, 1, 1},  
+                       {0, 0, 2}}; 
 
-    int max[5][3] = {{7, 5, 3},  // P1 // MAX Matrix
-                     {3, 2, 2},  // P2
-                     {9, 0, 2},  // P3
-                     {4, 2, 2},  // P4
-                     {5, 3, 3}}; // P5
+    int max[5][3] = {{7, 5, 3}, 
+                     {3, 2, 2},  
+                     {9, 0, 2},  
+                     {4, 2, 2},  
+                     {5, 3, 3}}; 
 
-    int avail[3] = {3, 3, 2}; // Available Resources
+    int avail[3] = {3, 3, 2}; 
 
-    int f[n], ans[n], ind = 0; // initiall f[] is set to 0 for all processes /no processes has been executed yet
+    int f[n], ans[n], ind = 0; 
     for (k = 0; k < n; k++)
     {
-        f[k] = 0; // initializing 0 for all processes
+        f[k] = 0; 
     }
     int need[n][m];
     for (i = 0; i < n; i++)
@@ -32,9 +31,9 @@ int main()
             need[i][j] = max[i][j] - alloc[i][j];
     }
     int y = 0;
-    for (k = 0; k < n; k++) // if any process is told to wait, then it will be executed again (i.e ALL PROCESSES WILL BE CHECKED AGAIN)
+    for (k = 0; k < n; k++) 
     {
-        for (i = 0; i < n; i++) // iterating through all processes
+        for (i = 0; i < n; i++)
         {
             if (f[i] == 0)
             {

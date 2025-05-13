@@ -17,7 +17,7 @@ int findLRU(int time[], int noFrame)
 void LRU(int noPage, int page[], int noFrame, int frame[])
 {
     int i, j, hitCount = 0, faultCount = 0;
-    int time[noFrame]; // To track usage time
+    int time[noFrame];
     int counter = 0;
 
     for (i = 0; i < noFrame; i++)
@@ -62,7 +62,6 @@ void LRU(int noPage, int page[], int noFrame, int frame[])
             faultCount++;
         }
 
-        // Print current state
         printf("%d\t", page[i]);
         for (j = 0; j < noFrame; j++)
         {

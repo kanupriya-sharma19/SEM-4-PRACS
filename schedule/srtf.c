@@ -1,16 +1,16 @@
 #include <stdio.h>
 #include <stdbool.h>
 #define MAX 1000
-int g[MAX], gt[MAX], gi = 0; // Process IDs and corresponding time units
+int g[MAX], gt[MAX], gi = 0;
 
 struct Processes {
     int process_id;
-    int at; // Arrival Time
-    int bt; // Burst Time
-    int remaining_bt; // Remaining Burst Time (for preemptive version)
-    int ct; // Completion Time
-    int tat; // Turnaround Time
-    int wt; // Waiting Time
+    int at; 
+    int bt; 
+    int remaining_bt; 
+    int ct; 
+    int tat; 
+    int wt;
 };
 
 void SJF_Preemptive(struct Processes *process, int n) {
@@ -113,10 +113,10 @@ printf("\n");
 int main() {
     int n = 4;
     struct Processes process[4] = {
-        {1, 0, 5, 0, 0, 0, 0},  // {Process ID, Arrival Time, Burst Time, Completion Time, Turnaround Time, Waiting Time}
-        {2, 1, 3, 0, 0, 0, 0},
-        {3, 2, 4, 0, 0, 0, 0},
-        {4, 4, 1, 0, 0, 0, 0}
+        {1, 0, 8, 0, 0, 0, 0}, 
+        {2, 4, 10, 0, 0, 0, 0},
+        {3, 4, 3, 0, 0, 0, 0},
+        {4, 10, 4, 0, 0, 0, 0}
     };
 
     SJF_Preemptive(process, n);

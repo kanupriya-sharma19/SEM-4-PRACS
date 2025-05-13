@@ -12,7 +12,6 @@ void Optimal(int noPage, int page[], int noFrame, int frame[])
 
     printf("Pages\tFrames\t\tHit\n");
 
-  // inside Optimal()
 for (i = 0; i < noPage; i++)
 {
     int hit = 0;
@@ -28,7 +27,6 @@ for (i = 0; i < noPage; i++)
 
     if (hit == 0)
     {
-        // Page fault occurred
         if (faultCount < noFrame)
         {
             frame[faultCount] = page[i];

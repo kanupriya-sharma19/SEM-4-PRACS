@@ -11,7 +11,6 @@ struct Processes {
 };
 
 void FCFS(struct Processes *process, int n) {
-    // Sort by arrival time (simple swap method)
     for(int i=0;i<n-1;i++) {
         for(int j=i+1;j<n;j++) {
             if(process[j].at < process[i].at) {
@@ -37,7 +36,15 @@ void FCFS(struct Processes *process, int n) {
 
 void printResults(struct Processes *process, int n) {
     float total_tat = 0, total_wt = 0;
-
+    for (int i = 0; i < n - 1; i++) {
+        for (int j = i + 1; j < n; j++) {
+            if (process[i].process_id > process[j].process_id) {
+                struct Processes temp = process[i];
+                process[i] = process[j];
+                process[j] = temp;
+            }
+        }
+    }
     printf("\nProcess\tAT\tBT\tCT\tTAT\tWT\n");
     for (int i = 0; i < n; i++) {
         printf("P%d\t%d\t%d\t%d\t%d\t%d\n", process[i].process_id, process[i].at, process[i].bt, process[i].ct, process[i].tat, process[i].wt);
@@ -48,7 +55,6 @@ void printResults(struct Processes *process, int n) {
     printf("\nAverage Turnaround Time: %.2f\n", total_tat / n);
     printf("Average Waiting Time: %.2f\n", total_wt / n);
 
-    // Simple Gantt Chart
     printf("\nGantt Chart:\n|");
     for (int i = 0; i < n; i++) {
         printf(" P%d |", process[i].process_id);
@@ -61,12 +67,12 @@ void printResults(struct Processes *process, int n) {
 }
 
 int main() {
-    int n = 4;
-    struct Processes process[4] = {
-        {1, 0, 2, 0, 0, 0},
-        {2, 1, 2, 0, 0, 0},
-        {3, 5, 3, 0, 0, 0},
-        {4, 6, 4, 0, 0, 0}
+    int n = 3;
+    struct Processes process[3] = {
+        {1, 2, 5, 0, 0, 0},
+        {2, 0, 3, 0, 0, 0},
+        {3, 4, 4, 0, 0, 0},
+      
        
     };
 
