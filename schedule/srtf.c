@@ -1,5 +1,7 @@
 #include <stdio.h>
 #include <stdbool.h>
+#define MAX 1000
+int g[MAX], gt[MAX], gi = 0; // Process IDs and corresponding time units
 
 struct Processes {
     int process_id;
@@ -16,7 +18,6 @@ void SJF_Preemptive(struct Processes *process, int n) {
     int completed = 0;
     int idx = -1;
 
-    // Sort processes based on arrival time (at)
     for (int i = 0; i < n - 1; i++) {
         for (int j = i + 1; j < n; j++) {
             if (process[i].at > process[j].at) {
@@ -27,7 +28,6 @@ void SJF_Preemptive(struct Processes *process, int n) {
         }
     }
 
-    // Initialize remaining burst time for preemptive scheduling
     for (int i = 0; i < n; i++) {
         process[i].remaining_bt = process[i].bt;
     }
@@ -35,7 +35,6 @@ void SJF_Preemptive(struct Processes *process, int n) {
     while (completed < n) {
         int min_bt = 1e9;
         
-        // Find the process with the shortest remaining burst time
         for (int i = 0; i < n; i++) {
             if (process[i].at <= current_time && process[i].remaining_bt > 0) {
                 if (process[i].remaining_bt < min_bt) {
@@ -47,16 +46,17 @@ void SJF_Preemptive(struct Processes *process, int n) {
             }
         }
         
-        // If no process is available to execute, increment current time
         if (idx == -1) {
             current_time++;
             continue;
         }
 
-        // Execute the process by reducing the remaining burst time
-        process[idx].remaining_bt--;
+        g[gi] = process[idx].process_id;
+gt[gi] = current_time + 1;
+gi++;
+
+process[idx].remaining_bt--;
         
-        // If the process completes, calculate its completion time, turnaround time, and waiting time
         if (process[idx].remaining_bt == 0) {
             process[idx].ct = current_time + 1;
             process[idx].tat = process[idx].ct - process[idx].at;
@@ -79,7 +79,6 @@ void printResults(struct Processes *process, int n) {
             }
         }
     }
-    // Print the table with process details in the correct order
     printf("\nProcess\tAT\tBT\tCT\tTAT\tWT\n");
     for (int i = 0; i < n; i++) {
         printf("P%d\t%d\t%d\t%d\t%d\t%d\n",
@@ -95,29 +94,20 @@ void printResults(struct Processes *process, int n) {
 
     printf("\nAverage Turnaround Time: %.2f\n", total_tat / n);
     printf("Average Waiting Time: %.2f\n", total_wt / n);
-for (int i = 0; i < n - 1; i++) {
-        for (int j = i + 1; j < n; j++) {
-            if (process[i].ct > process[j].ct) {
-                struct Processes temp = process[i];
-                process[i] = process[j];
-                process[j] = temp;
-            }
-        }
-    }
-    // Optional Gantt Chart
-    printf("\nGantt Chart:\n|");
+printf("\nDetailed Gantt Chart (every second):\n");
 
-    for (int i = 0; i < n; i++) {
-        printf(" P%d |", process[i].process_id);
-    }
-    printf("\n0");
+for (int i = 0; i < gi; i++) {
+    printf("|P%d", g[i]);
+}
+printf("|\n");
 
-    int last_ct = 0;
-    for (int i = 0; i < n; i++) {
-        printf("   %d", process[i].ct);
-        last_ct = process[i].ct;
-    }
-    printf("\n");
+printf("0");
+for (int i = 0; i < gi; i++) {
+    printf("  %d", gt[i]);
+}
+printf("\n");
+
+
 }
 
 int main() {
