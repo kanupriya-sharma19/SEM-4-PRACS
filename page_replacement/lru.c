@@ -83,10 +83,10 @@ void LRU(int noPage, int page[], int noFrame, int frame[])
 }
 int main()
 {
-    int pages[] = {7,0,1,2,0,3,0,4,2,3,0,3,2,1,2,0,1,7,0,1};
+    int pages[] = { 4, 7, 6, 1, 7, 6, 1, 2, 7, 2};
     int noPages = sizeof(pages) / sizeof(pages[0]);
 
-    int noFrames = 4;
+    int noFrames = 3;
     int frames[noFrames];
     LRU(noPages, pages, noFrames, frames);
     return 0;

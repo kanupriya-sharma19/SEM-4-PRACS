@@ -59,7 +59,7 @@ void LFU(int noPage, int page[], int noFrame, int frame[]) {
 }
 
 int main() {
-    int pages[] = {2, 3, 4, 2, 1, 3, 7, 5, 4, 3};
+    int pages[] = {4, 7, 6, 1, 7, 6, 1, 2, 7, 2};
     int noPages = sizeof(pages) / sizeof(pages[0]);
 
     int noFrames = 3;
