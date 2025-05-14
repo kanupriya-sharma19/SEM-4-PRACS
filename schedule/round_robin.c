@@ -80,18 +80,38 @@ void rr(int quant)
             enqueue(prev);
         }
 
-        if (front == -1 && count < n)
+       if (front == -1 && count < n)
+{
+    int next_arrival = -1;
+    for (int i = 0; i < n; i++)
+    {
+        if (pro[i].rem > 0)
         {
-            for (int i = 0; i < n; i++)
-            {
-                if (pro[i].rem > 0)
-                {
-                    current_time = pro[i].at;
-                    enqueue(i);
-                    break;
-                }
-            }
+            if (next_arrival == -1 || pro[i].at < next_arrival)
+                next_arrival = pro[i].at;
         }
+    }
+
+    if (next_arrival > current_time)
+    {
+        // CPU is idle
+        g[gi] = -1;                 // -1 means idle
+        gt[gi] = next_arrival;
+        gi++;
+        current_time = next_arrival;
+    }
+
+    // After idle, enqueue the first ready process
+    for (int i = 0; i < n; i++)
+    {
+        if (pro[i].at <= current_time && pro[i].rem > 0 && visited[i] == 0)
+        {
+            enqueue(i);
+            visited[i] = 1;
+        }
+    }
+}
+
 
         int val = dequeue();
         if (val == -1) break;
@@ -140,7 +160,14 @@ void display()
     printf("Avg TAT: %.2f\nAvg WT: %.2f\n", tat1, wt1);
 
     printf("\nDetailed Gantt Chart (every second):\n");
-    for (int i = 0; i < gi; i++) printf("|P%d", g[i]);
+     for (int i = 0; i < gi; i++)
+{
+    if (g[i] == -1)
+        printf("|Idle");
+    else
+        printf("|P%d", g[i]);
+}
+
     printf("|\n");
 
     printf("0");
@@ -153,9 +180,9 @@ int main()
     n = 3;
     int tq = 2;
 
-    pro[0] = (struct pro){0, 4, 0, 0, 0, 4};
-    pro[1] = (struct pro){0, 5, 0, 0, 0, 5};
-    pro[2] = (struct pro){0, 3, 0, 0, 0, 3};
+    pro[0] = (struct pro){0, 5, 5, 0, 0, 5};
+    pro[1] = (struct pro){4, 2, 2, 0, 0, 2};
+    pro[2] = (struct pro){5, 4, 4, 0, 0, 4};
    
 
     rr(tq);
