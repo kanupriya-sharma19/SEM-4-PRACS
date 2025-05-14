@@ -6,37 +6,46 @@ void nextFit(int blockSize[], int m, int processSize[], int n)
     int allocatedProcess[m];
     int fragment[m];
     int lastIndex = 0;
-    for(int i = 0; i<m; i++){
+
+    for(int i = 0; i < m; i++) {
         allocatedIndex[i] = -1;
         allocatedProcess[i] = -1;
         fragment[i] = -1;
     }
 
-    for(int i=0; i<n; i++){
+    for(int i = 0; i < n; i++) {
         int j = lastIndex;
-        do{
-            if(blockSize[j]>= processSize[i] && allocatedIndex[j]==-1){
+        int count = 0;
+        while(count < m) {
+            if(blockSize[j] >= processSize[i] && allocatedIndex[j] == -1) {
                 allocatedIndex[j] = i;
                 allocatedProcess[j] = processSize[i];
                 fragment[j] = blockSize[j] - processSize[i];
+                lastIndex = (j + 1) % m; 
                 break;
             }
-            j = (j+1)%m;
-        }while(j!=lastIndex);
+            j = (j + 1) % m;
+            count++;
+        }
     }
-    printf("Block Number\t\t\t Block Size\t\t\t Process Id\t\t\t Process Size\t\t\t Fragmentation\n");
-    for(int i=0; i<m; i++){
-        printf("%d\t\t\t\t%d\t\t\t\t%d\t\t\t\t%d\t\t\t\t%d\t\t\t\t\n",i+1,blockSize[i],allocatedIndex[i],allocatedProcess[i],fragment[i]);
+
+    printf("Block Number\t Block Size\t Process Id\t Process Size\t Fragmentation\n");
+    for(int i = 0; i < m; i++) {
+        printf("%d\t\t %d\t\t ", i + 1, blockSize[i]);
+        if(allocatedIndex[i] != -1)
+            printf("%d\t\t %d\t\t %d\n", allocatedIndex[i], allocatedProcess[i], fragment[i]);
+        else
+            printf("-1\t\t -1\t\t -1\n");
     }
 }
 
-
 int main()
 {
-    printf("\n --- Next Fit ---");
+    printf("\n --- Next Fit ---\n");
     int blockSize[] = {100, 500, 200, 450, 600};
     int processSize[] = {212, 417, 112, 426};
     int m = sizeof(blockSize) / sizeof(blockSize[0]);
     int n = sizeof(processSize) / sizeof(processSize[0]);
     nextFit(blockSize, m, processSize, n);
+    return 0;
 }
