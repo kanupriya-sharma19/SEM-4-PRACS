@@ -1,0 +1,541 @@
+INSERTION
+
+#include <stdio.h>
+
+int arr[9]={2,-332,4,565,3,-1,-324,32432,32};
+int n=9;
+void insertionSort(int arr[], int n) {
+    int i, key, j;
+    for (i = 1; i < n; i++) {   
+        j = i;
+        while (j >0 && arr[j-1] >arr[j]) {
+         int t=arr[j-1];
+         arr[j-1]=arr[j];
+         arr[j]=t;
+         j--;
+        }
+        
+    }
+}
+
+void printArray(int arr[], int size) {
+    int i;
+    for (i = 0; i < size; i++)
+        printf("%d ", arr[i]);
+    printf("\n");
+}
+
+int main() {
+    
+  
+
+    insertionSort(arr, n);
+printArray(arr,n);
+    
+
+    return 0;
+}
+
+
+SELECTION
+
+#include<stdio.h>
+#include<conio.h>
+
+ 
+int arr[6]={2,-332,4,565,3,-1};
+int n=6;
+void printArray(int a[], int n){
+    int i;
+    for(i = 0; i < n; i++){
+        printf("%d ", a[i]);
+    }
+    printf("\n");
+}
+
+void selectionSort(int a[], int n){
+    int i, j, minIndex, temp;
+    for(i = 0; i < n-1; i++){
+        minIndex = i;
+        for(j = i+1; j < n; j++){
+            if(a[j] < a[minIndex]){
+                minIndex = j;
+            }
+        }
+        temp = a[i];
+        a[i] = a[minIndex];
+        a[minIndex] = temp;
+    }
+}
+
+int main()
+{
+  
+    selectionSort(arr, n);
+printArray(arr,n);
+    
+
+    return 0;
+}
+
+MERGE
+
+#include <stdio.h>
+
+#define MAX_SIZE 1000
+
+int temp[MAX_SIZE]; 
+
+void merge(int arr[], int low, int mid, int high) {
+    int left = low;
+    int right = mid + 1;
+    int k = 0;
+
+    while (left <= mid && right <= high) {
+        if (arr[left] <= arr[right]) {
+            temp[k++] = arr[left++];
+        } else {
+            temp[k++] = arr[right++];
+        }
+    }
+
+    while (left <= mid) {
+        temp[k++] = arr[left++];
+    }
+
+    while (right <= high) {
+        temp[k++] = arr[right++];
+    }
+
+    for (int i = 0; i < k; i++) {
+        arr[low + i] = temp[i];
+    }
+}
+
+void mergeSort(int arr[], int low, int high) {
+    if (low >= high) return;
+    int mid = (low + high) / 2;
+    mergeSort(arr, low, mid);
+    mergeSort(arr, mid + 1, high);
+    merge(arr, low, mid, high);
+}
+
+void printArray(int arr[], int size) {
+    for (int i = 0; i < size; i++)
+        printf("%d ", arr[i]);
+    printf("\n");
+}
+
+int main() {
+    int arr[] = {2,-332,4,565,3,-1,-324,32432,32};
+    int n = sizeof(arr) / sizeof(arr[0]);
+
+    mergeSort(arr, 0, n - 1);
+
+    printArray(arr, n);
+    return 0;
+}
+
+
+QUICK
+
+#include <stdio.h>
+
+void swap(int* a, int* b) {
+    int temp=*a;
+    *a=*b;
+    *b=temp;
+}
+
+int partition(int arr[], int low, int high) {
+    int pivot = arr[low];
+    int i = low;
+    int j = high;
+
+    while (i < j) {
+        while (arr[i] <= pivot && i <= high - 1) {
+            i++;
+        }
+
+        while (arr[j] > pivot && j >= low + 1) {
+            j--;
+        }
+
+        if (i < j) {
+            swap(&arr[i], &arr[j]);
+        }
+    }
+    swap(&arr[low], &arr[j]);
+    return j;
+}
+
+void quickSort(int arr[], int low, int high) {
+    if (low < high) {
+        int pIndex = partition(arr, low, high);
+        quickSort(arr, low, pIndex - 1);
+        quickSort(arr, pIndex + 1, high);
+    }
+}
+
+void printArray(int arr[], int n) {
+    for (int i=0;i<n;i++) {
+        printf("%d ", arr[i]);
+    }
+    printf("\n");
+}
+
+int main() {
+    int arr[] = {4, 6, 2, 5, 7, 9, 1, 3};
+    int n = sizeof(arr) / sizeof(arr[0]);
+
+    printf("Before Using Quick Sort:\n");
+    printArray(arr, n);
+
+    quickSort(arr, 0, n - 1);
+
+    printf("After Using Quick Sort:\n");
+    printArray(arr, n);
+
+    return 0;
+}
+
+
+BINARY
+
+#include <stdio.h>
+#include <conio.h>
+
+int binarySearch(int arr[], int n, int data) {
+    int left = 0;
+    int right = n - 1;
+
+    while (left <= right) {
+        int mid = left + (right - left) / 2;
+
+        if (arr[mid] == data) {
+            return mid; 
+        } else if (arr[mid] < data) {
+            left = mid + 1; 
+        } else {
+            right = mid - 1; 
+        }
+    }
+
+    return -1; 
+}
+
+int main() {
+    int arr[10], n, i, data;
+
+    printf("Enter the number of elements: ");
+    scanf("%d", &n);
+
+    printf("Enter the elements (in ascending order):\n");
+    for (i = 0; i < n; i++)
+        scanf("%d", &arr[i]);
+
+    printf("Enter the element to be searched: ");
+    scanf("%d", &data);
+
+    int result = binarySearch(arr, n, data);
+
+    if (result != -1)
+        printf("%d found at position %d\n", data, result + 1);
+    else
+        printf("%d not found\n", data);
+
+    return 0;
+}
+
+
+MIN MAX
+
+#include<stdio.h>
+
+int a[100], min, max;
+
+void MinMax(int low, int high) {
+	int mid, min1, max1;
+	if (low == high) {
+		max = min = a[low];
+	}
+	else if (low == high - 1) {
+		if (a[low] < a[high]) {
+			min = a[low];
+			max = a[high];
+		}
+		else {
+			min = a[high];
+			max = a[low];
+		}
+	}
+	else {
+		mid = (low + high) / 2;
+		MinMax(low, mid);
+		min1 = min;
+		max1 = max;
+		MinMax(mid + 1, high);
+		if (max1 > max)
+			max = max1;
+		if (min1 < min)
+			min = min1;
+	}
+}
+
+int main() {
+	int i;
+    int n;
+    printf("Enter the number of elements: ");
+    scanf("%d", &n);
+	for (i = 0; i < n; i++)
+    {
+        printf("Enter element %d : ", i + 1);
+		scanf("%d", &a[i]);
+    }    
+	MinMax(0, n - 1);
+	printf("Min: %d, Max: %d", min, max);
+	return 0;
+}
+
+
+N-QUEENS
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+
+#define MAX 30
+
+int x[MAX];
+int solution_count = 0;
+
+int isSafe(int k, int col) {
+    for (int i = 0; i < k; i++) {
+        if (x[i] == col || abs(x[i] - col) == abs(i - k))
+            return 0;
+    }
+    return 1;
+}
+
+void printSolution(int n) {
+    solution_count++;
+    printf("\nSolution #%d:\n", solution_count);
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
+            if (x[i] == j)
+                printf("Q ");
+            else
+                printf("* ");
+        }
+        printf("\n");
+    }
+}
+
+void NQueens(int k, int n) {
+    for (int col = 0; col < n; col++) {
+        if (isSafe(k, col)) {
+            x[k] = col;
+            if (k == n - 1)
+                printSolution(n);
+            else
+                NQueens(k + 1, n);
+        }
+    }
+}
+
+int main() {
+    int n;
+    printf("Enter the number of queens: ");
+    scanf("%d", &n);
+    NQueens(0, n);
+    printf("\nTotal solutions = %d\n", solution_count);
+    return 0;
+}
+
+
+
+SUM OF SUBSETS
+
+#include <stdio.h>
+
+#define max 50
+
+int subset[max];
+int elements[max];
+int target;
+int n;
+
+void findSumofSubet(int index, int current_sum, int remaining_sum) {
+    if (current_sum == target) {
+        for (int i = 0; i < n; i++) {
+            printf("%d", subset[i]);
+        }
+        printf("\n");
+        return;
+    }
+    
+    if (index == n || current_sum > target || current_sum + remaining_sum < target) {
+        return;
+    }
+
+    subset[index] = 1;
+    findSumofSubet(index + 1, current_sum + elements[index], remaining_sum - elements[index]);
+
+    subset[index] = 0;
+    findSumofSubet(index + 1, current_sum, remaining_sum - elements[index]);
+}
+
+int main() {
+    printf("Enter Number of Elements : ");
+    scanf("%d", &n);
+
+    int total_sum = 0;
+    printf("Enter Elements : \n");
+    for (int i = 0; i < n; i++) {
+        printf("Enter Element %d : ", i);
+        scanf("%d", &elements[i]);
+        total_sum += elements[i];
+        subset[i] = 0;
+    }
+
+    printf("Enter Target Sum : ");
+    scanf("%d", &target);
+
+    findSumofSubet(0, 0, total_sum);
+}
+
+
+GRAPH COLORING
+
+#include <stdio.h>
+
+#define MAX 50
+
+int x[MAX];
+int g[4][4] = {
+    {0, 1, 0, 1},
+    {1, 0, 1, 0},
+    {0, 1, 0, 1},
+    {1, 0, 1, 0}
+};
+
+int n = 4;         
+int m;             
+int c = 0;         
+int count = 0;     
+
+void nextValue(int k) {
+    int j;
+    while (1) {
+        x[k] = (x[k] + 1) % (m + 1); 
+        if (x[k] == 0)
+            return; 
+
+        for (j = 0; j < n; j++) {
+            if (g[k][j] == 1 && x[k] == x[j])
+                break; 
+        }
+
+        if (j == n)
+            return; 
+    }
+}
+
+void GraphColoring(int k) {
+    while (1) {
+        nextValue(k);
+        if (x[k] == 0)
+            return;
+
+        if (k == n - 1) {
+            c = 1;
+            for (int i = 0; i < n; i++)
+                printf("%d ", x[i]);
+            count++;
+            printf("\n");
+        } else {
+            GraphColoring(k + 1);
+        }
+    }
+}
+
+int main() {
+    printf("Possible Solutions are:\n");
+
+    for (m = 1; m <= n; m++) {
+        c = 0;
+        count = 0;
+        for (int i = 0; i < MAX; i++) x[i] = 0;
+
+        GraphColoring(0);
+
+        if (c == 1) {
+            printf("\nThe chromatic number is %d", m);
+            printf("\nThe total number of solutions is %d\n", count);
+            break;
+        }
+    }
+
+    return 0;
+}
+
+
+
+Hamilton
+
+#include <stdio.h>
+
+int G[5][5] = {
+    {0,1,1,0,1},
+    {1,0,1,1,1},
+    {1,1,0,1,0},
+    {0,1,1,0,1},
+    {1,1,0,1,0}
+};
+int n = 5;
+int x[5] = {0, 0, 0, 0, 0}; 
+
+void place(int k) {
+    int j;
+    while(1) {
+        x[k] = (x[k] + 1) % n;
+        if(x[k] == 0)
+            return;
+
+        if(G[x[k-1]][x[k]] != 0) {
+            for(j = 0; j < k; j++) {
+                if(x[j] == x[k])
+                    break;
+            }
+            if(j == k) {
+                if(k < n-1 || (k == n-1 && G[x[k]][x[0]] != 0)) {
+                    return;
+                }
+            }
+        }
+    }
+}
+
+void Hamiltonian(int k) {
+    while(1) {
+        place(k);
+        if(x[k] == 0)
+            return;
+
+        if(k == n - 1) {
+            printf("Solution:");
+            for(int i = 0; i < n; i++) {
+                printf(" %d", x[i]);
+            }
+            printf(" %d\n", x[0]); 
+        } else {
+            Hamiltonian(k + 1);
+        }
+    }
+}
+
+int main() {
+    x[0] = 0;  
+    Hamiltonian(1);
+    return 0;
+}

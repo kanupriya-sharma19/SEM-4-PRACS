@@ -1,0 +1,47 @@
+#include <stdio.h>
+
+#define V 5
+
+#define INF 99999
+
+
+void floydWarshall(int graph[V][V]) {
+    int dist[V][V];
+    int i, j, k;
+
+   
+
+    for (k = 0; k < V; k++) {
+        for (i = 0; i < V; i++) {
+            for (j = 0; j < V; j++) {
+                if (graph[i][k] + graph[k][j] < graph[i][j]){
+                    graph[i][j] = graph[i][k] + graph[k][j];
+                }
+            }
+        }
+    }
+
+    printf("Shortest distances between every pair of vertices:\n");
+    for (i = 0; i < V; i++) {
+        for (j = 0; j < V; j++) {
+            if (graph[i][j] == INF)
+                printf("%7s", "INF");
+            else
+                printf("%7d", graph[i][j]);
+        }
+        printf("\n");
+    }
+}
+
+int main() {
+    int graph[V][V] = {
+    { 0, 4, INF, 5, INF },
+    { INF, 0, 1, INF, 6 },
+    { 2, INF, 0, 3, INF },
+    { INF, INF, 1, 0, 2 },
+    { 1, INF, INF, 4, 0 }
+
+    };
+    floydWarshall(graph);
+    return 0;
+}

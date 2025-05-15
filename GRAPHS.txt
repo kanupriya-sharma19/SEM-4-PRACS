@@ -1,0 +1,666 @@
+INSERTION
+
+#include <stdio.h>
+
+int arr[9]={2,-332,4,565,3,-1,-324,32432,32};
+int n=9;
+void insertionSort(int arr[], int n) {
+    int i, key, j;
+    for (i = 1; i < n; i++) {   
+        j = i;
+        while (j >0 && arr[j-1] >arr[j]) {
+         int t=arr[j-1];
+         arr[j-1]=arr[j];
+         arr[j]=t;
+         j--;
+        }
+        
+    }
+}
+
+void printArray(int arr[], int size) {
+    int i;
+    for (i = 0; i < size; i++)
+        printf("%d ", arr[i]);
+    printf("\n");
+}
+
+int main() {
+    
+  
+
+    insertionSort(arr, n);
+printArray(arr,n);
+    
+
+    return 0;
+}
+
+
+SELECTION
+
+#include<stdio.h>
+#include<conio.h>
+
+ 
+int arr[6]={2,-332,4,565,3,-1};
+int n=6;
+void printArray(int a[], int n){
+    int i;
+    for(i = 0; i < n; i++){
+        printf("%d ", a[i]);
+    }
+    printf("\n");
+}
+
+void selectionSort(int a[], int n){
+    int i, j, minIndex, temp;
+    for(i = 0; i < n-1; i++){
+        minIndex = i;
+        for(j = i+1; j < n; j++){
+            if(a[j] < a[minIndex]){
+                minIndex = j;
+            }
+        }
+        temp = a[i];
+        a[i] = a[minIndex];
+        a[minIndex] = temp;
+    }
+}
+
+int main()
+{
+  
+    selectionSort(arr, n);
+printArray(arr,n);
+    
+
+    return 0;
+}
+
+MERGE
+
+#include <stdio.h>
+
+#define MAX_SIZE 1000
+
+int temp[MAX_SIZE]; 
+
+void merge(int arr[], int low, int mid, int high) {
+    int left = low;
+    int right = mid + 1;
+    int k = 0;
+
+    while (left <= mid && right <= high) {
+        if (arr[left] <= arr[right]) {
+            temp[k++] = arr[left++];
+        } else {
+            temp[k++] = arr[right++];
+        }
+    }
+
+    while (left <= mid) {
+        temp[k++] = arr[left++];
+    }
+
+    while (right <= high) {
+        temp[k++] = arr[right++];
+    }
+
+    for (int i = 0; i < k; i++) {
+        arr[low + i] = temp[i];
+    }
+}
+
+void mergeSort(int arr[], int low, int high) {
+    if (low >= high) return;
+    int mid = (low + high) / 2;
+    mergeSort(arr, low, mid);
+    mergeSort(arr, mid + 1, high);
+    merge(arr, low, mid, high);
+}
+
+void printArray(int arr[], int size) {
+    for (int i = 0; i < size; i++)
+        printf("%d ", arr[i]);
+    printf("\n");
+}
+
+int main() {
+    int arr[] = {2,-332,4,565,3,-1,-324,32432,32};
+    int n = sizeof(arr) / sizeof(arr[0]);
+
+    mergeSort(arr, 0, n - 1);
+
+    printArray(arr, n);
+    return 0;
+}
+
+
+QUICK
+
+#include <stdio.h>
+
+void swap(int* a, int* b) {
+    int temp=*a;
+    *a=*b;
+    *b=temp;
+}
+
+int partition(int arr[], int low, int high) {
+    int pivot = arr[low];
+    int i = low;
+    int j = high;
+
+    while (i < j) {
+        while (arr[i] <= pivot && i <= high - 1) {
+            i++;
+        }
+
+        while (arr[j] > pivot && j >= low + 1) {
+            j--;
+        }
+
+        if (i < j) {
+            swap(&arr[i], &arr[j]);
+        }
+    }
+    swap(&arr[low], &arr[j]);
+    return j;
+}
+
+void quickSort(int arr[], int low, int high) {
+    if (low < high) {
+        int pIndex = partition(arr, low, high);
+        quickSort(arr, low, pIndex - 1);
+        quickSort(arr, pIndex + 1, high);
+    }
+}
+
+void printArray(int arr[], int n) {
+    for (int i=0;i<n;i++) {
+        printf("%d ", arr[i]);
+    }
+    printf("\n");
+}
+
+int main() {
+    int arr[] = {4, 6, 2, 5, 7, 9, 1, 3};
+    int n = sizeof(arr) / sizeof(arr[0]);
+
+    printf("Before Using Quick Sort:\n");
+    printArray(arr, n);
+
+    quickSort(arr, 0, n - 1);
+
+    printf("After Using Quick Sort:\n");
+    printArray(arr, n);
+
+    return 0;
+}
+
+
+BINARY
+
+#include <stdio.h>
+#include <conio.h>
+
+int binarySearch(int arr[], int n, int data) {
+    int left = 0;
+    int right = n - 1;
+
+    while (left <= right) {
+        int mid = left + (right - left) / 2;
+
+        if (arr[mid] == data) {
+            return mid; 
+        } else if (arr[mid] < data) {
+            left = mid + 1; 
+        } else {
+            right = mid - 1; 
+        }
+    }
+
+    return -1; 
+}
+
+int main() {
+    int arr[10], n, i, data;
+
+    printf("Enter the number of elements: ");
+    scanf("%d", &n);
+
+    printf("Enter the elements (in ascending order):\n");
+    for (i = 0; i < n; i++)
+        scanf("%d", &arr[i]);
+
+    printf("Enter the element to be searched: ");
+    scanf("%d", &data);
+
+    int result = binarySearch(arr, n, data);
+
+    if (result != -1)
+        printf("%d found at position %d\n", data, result + 1);
+    else
+        printf("%d not found\n", data);
+
+    return 0;
+}
+
+
+MIN MAX
+
+#include<stdio.h>
+
+int a[100], min, max;
+
+void MinMax(int low, int high) {
+	int mid, min1, max1;
+	if (low == high) {
+		max = min = a[low];
+	}
+	else if (low == high - 1) {
+		if (a[low] < a[high]) {
+			min = a[low];
+			max = a[high];
+		}
+		else {
+			min = a[high];
+			max = a[low];
+		}
+	}
+	else {
+		mid = (low + high) / 2;
+		MinMax(low, mid);
+		min1 = min;
+		max1 = max;
+		MinMax(mid + 1, high);
+		if (max1 > max)
+			max = max1;
+		if (min1 < min)
+			min = min1;
+	}
+}
+
+int main() {
+	int i;
+    int n;
+    printf("Enter the number of elements: ");
+    scanf("%d", &n);
+	for (i = 0; i < n; i++)
+    {
+        printf("Enter element %d : ", i + 1);
+		scanf("%d", &a[i]);
+    }    
+	MinMax(0, n - 1);
+	printf("Min: %d, Max: %d", min, max);
+	return 0;
+}
+
+
+PRIMS
+
+#include <stdio.h>
+#include <conio.h>
+#include <limits.h>
+
+#define NODES 5
+#define INF INT_MAX
+
+int mst[NODES];
+int adj[NODES][NODES] = {
+
+	{ 0, 2, 0, 6, 0 },
+                        		{ 2, 0, 3, 8, 5 },
+                        		{ 0, 3, 0, 0, 7 },
+                        		{ 6, 8, 0, 0, 9 },
+                        		{ 0, 5, 7, 9, 0 }
+};
+
+struct Vertices {
+	int dist;
+	int parent;
+	int visited;
+} V[NODES];
+
+
+int extractMin() {
+	int min = INF;
+	int minIndex = -1;
+	for (int i = 0; i < NODES; i++) {
+		if (!V[i].visited && V[i].dist < min) {
+			min = V[i].dist;
+			minIndex = i;
+		}
+	}
+	return minIndex;
+}
+
+
+void Prims(int start) {
+	for (int i = 0; i < NODES; i++) {
+		V[i].dist = INF;
+		V[i].parent = -1;
+		V[i].visited = 0;
+	}
+	V[start].dist = 0;
+	for (int i = 0; i < NODES; i++) {
+		int u = extractMin();
+		V[u].visited = 1;
+		for (int v = 0; v < NODES; v++) {
+			if (adj[u][v] && !V[v].visited && V[v].dist > adj[u][v]) {
+				V[v].parent = u;
+				V[v].dist = adj[u][v];
+			}
+		}
+	}
+	for (int i = 0; i < NODES; i++) {
+		mst[i] = V[i].parent;
+	}
+}
+
+int main() {
+	int totalCost = 0;
+		
+	Prims(0);
+	printf("Minimum Spanning Tree: \n");
+	for (int i = 0; i < NODES; i++) {
+		if (mst[i] != -1) {
+			printf("%d - %d: %d\n", mst[i], i, adj[i][mst[i]]);
+			totalCost += adj[i][mst[i]];
+		}
+	}
+	printf("Total Cost: %d\n", totalCost);
+	return 0;
+}
+
+
+
+KRUSKAL
+#include <stdio.h>
+#include <stdlib.h>
+#include <limits.h>
+
+#define NODES 5
+#define INF INT_MAX
+
+int adj[NODES][NODES] = {
+    { 0, 2, 0, 6, 0 },
+    { 2, 0, 3, 8, 5 },
+    { 0, 3, 0, 0, 7 },
+    { 6, 8, 0, 0, 9 },
+    { 0, 5, 7, 9, 0 }
+};
+
+int parent[NODES];
+
+int srcArr[NODES * NODES];
+int destArr[NODES * NODES];
+int weightArr[NODES * NODES];
+
+int find(int i) {
+    while (parent[i] != i)
+        i = parent[i];
+    return i;
+}
+
+void unionOp(int i, int j) {
+    int a = find(i);
+    int b = find(j);
+    parent[a] = b;
+}
+
+void swap(int *a, int *b) {
+    int temp=*a;
+    *a=*b;
+    *b=temp;
+}
+
+void sortEdges(int count) {
+    for (int i = 0; i < count - 1; i++) {
+        for (int j = i+1; j < count; j++) {
+            if (weightArr[i] > weightArr[j]) {
+                swap(&weightArr[i], &weightArr[j]);
+                swap(&srcArr[i], &srcArr[j]);
+                swap(&destArr[i], &destArr[j]);
+            }
+        }
+    }
+}
+
+void Kruskal(int totalEdges) {
+    int edgeCount = 0;
+    int totalCost = 0;
+
+    sortEdges(totalEdges);
+
+    for (int i = 0; i < NODES; i++)
+        parent[i] = i;
+
+    printf("Minimum Spanning Tree:\n");
+
+    for (int i = 0; i < totalEdges; i++) {
+        int src = srcArr[i];
+        int dest = destArr[i];
+        int srcParent = find(src);
+        int destParent = find(dest);
+
+        if (srcParent != destParent) {
+            printf("%d - %d: %d\n", src, dest, weightArr[i]);
+            totalCost += weightArr[i];
+            unionOp(srcParent, destParent);
+            edgeCount++;
+        }
+
+        if (edgeCount == NODES - 1)
+            break;
+    }
+
+    printf("Total Cost: %d\n", totalCost);
+}
+
+int main() {
+    int edgeIndex = 0;
+
+    for (int i = 0; i < NODES; i++) {
+        for (int j = i + 1; j < NODES; j++) {
+            if (adj[i][j] != 0) {
+                srcArr[edgeIndex] = i;
+                destArr[edgeIndex] = j;
+                weightArr[edgeIndex] = adj[i][j];
+                edgeIndex++;
+            }
+        }
+    }
+
+    Kruskal(edgeIndex);
+    return 0;
+}
+
+
+DIJKSTRA
+
+#include <stdio.h>
+#include <limits.h>
+
+#define NODES 6
+#define INF INT_MAX
+
+int adj[NODES][NODES] = {
+    
+   {0, 1, 2, 0, 0, 0},
+      {1, 0, 0, 5, 1, 0},
+      {2, 0, 0, 2, 3, 0},
+      {0, 5, 2, 0, 2, 2},
+      {0, 1, 3, 2, 0, 1},
+      {0, 0, 0, 2, 1, 0}
+    
+    };
+
+
+
+struct Vertex {
+    int dist;
+    int par;
+    int visited;
+} V[NODES];
+
+
+void InitializeSingleSource(int start) {
+    int i;
+    for (i = 0; i < NODES; i++) {
+        V[i].dist = INF;
+        V[i].par = -1;
+        V[i].visited = 0;
+    }
+    V[start].dist = 0;
+}
+
+int extractMin() {
+    int i, min = INF, minIndex = -1;
+    for (i = 0; i < NODES; i++) {
+        if (!V[i].visited && V[i].dist < min) {
+            min = V[i].dist;
+            minIndex = i;
+        }
+    }
+    return minIndex;
+}
+
+void relax(int u, int v) {
+    if (V[v].dist > V[u].dist + adj[u][v]) {
+        V[v].dist = V[u].dist + adj[u][v];
+        V[v].par = u;
+    }
+}
+
+void Djikstra(int start) {
+    int i, u, v;
+    InitializeSingleSource(start);
+    for (i = 0; i < NODES; i++) {
+        u = extractMin();
+        V[u].visited = 1;
+        for (v = 0; v < NODES; v++) {
+            if (!V[v].visited && adj[u][v])
+                relax(u, v);
+        }
+    }
+    for (i = 0; i < NODES; i++)
+        if (V[i].par != -1) {
+            printf("%d - %d: %d\n",start, i, V[i].dist);
+        }
+}
+
+int main() {
+    
+    
+    Djikstra( 0);
+    return 0;
+}
+
+FLOYDD
+
+#include <stdio.h>
+
+#define V 5
+
+#define INF 99999
+
+
+void floydWarshall(int graph[V][V]) {
+    int dist[V][V];
+    int i, j, k;
+
+   
+
+    for (k = 0; k < V; k++) {
+        for (i = 0; i < V; i++) {
+            for (j = 0; j < V; j++) {
+                if (graph[i][k] + graph[k][j] < graph[i][j]){
+                    graph[i][j] = graph[i][k] + graph[k][j];
+                }
+            }
+        }
+    }
+
+    printf("Shortest distances between every pair of vertices:\n");
+    for (i = 0; i < V; i++) {
+        for (j = 0; j < V; j++) {
+            if (graph[i][j] == INF)
+                printf("%7s", "INF");
+            else
+                printf("%7d", graph[i][j]);
+        }
+        printf("\n");
+    }
+}
+
+int main() {
+    int graph[V][V] = {
+    { 0, 4, INF, 5, INF },
+    { INF, 0, 1, INF, 6 },
+    { 2, INF, 0, 3, INF },
+    { INF, INF, 1, 0, 2 },
+    { 1, INF, INF, 4, 0 }
+
+    };
+    floydWarshall(graph);
+    return 0;
+}
+
+
+BELLMAN
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <limits.h>
+
+#define MAX_VERTICES 100
+#define MAX_EDGES 100
+
+
+void BellmanFord(int graph[MAX_EDGES][3], int vertices, int edges, int source) {
+    int distance[MAX_VERTICES];
+    for (int i = 0; i < vertices; i++)
+        distance[i] = INT_MAX;
+    distance[source] = 0;
+    
+    for (int i = 0; i < vertices - 1; i++) {
+        for (int j = 0; j < edges; j++) {
+            int u = graph[j][0];
+            int v = graph[j][1];
+            int weight = graph[j][2];
+            if (distance[u] != INT_MAX && distance[u] + weight < distance[v])
+                distance[v] = distance[u] + weight;
+        }
+    }
+
+    for (int i = 0; i < edges; i++) {
+        int u = graph[i][0];
+        int v = graph[i][1];
+        int weight = graph[i][2];
+        if (distance[u] != INT_MAX && distance[u] + weight < distance[v]) {
+            printf("Graph contains negative weight cycle\n");
+            return;
+        }
+    }
+
+    printf("Vertex   Distance from Source\n");
+    for (int i = 0; i < vertices; ++i)
+        printf("%d \t\t %d\n", i, distance[i]);
+}
+
+int main() {
+    int vertices = 6;  
+    int edges = 12;    
+    int graph[12][3] = {
+        {0, 1, 1}, {0, 2, 2}, {0, 3, 4}, {0, 4, 2}, {0, 5, 3},
+        {1, 3, 5}, {1, 4, 1}, {2, 3, 2}, {2, 4, 3}, {3, 4, 2},
+        {3, 5, 2}, {4, 5, 1}
+    };
+    int source = 0;
+
+    BellmanFord(graph, vertices, edges, source);
+
+    return 0;
+}

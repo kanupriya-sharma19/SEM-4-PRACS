@@ -1,0 +1,54 @@
+#include<stdio.h>
+
+int max(int a, int b) {
+    return (a > b) ? a : b;
+}
+
+int knapsack(int capacity, int weight[], int profit[], int n) {
+    int i, j;
+    int K[n + 1][capacity + 1];
+
+    for (i = 0; i <= n; i++) {
+        for (j = 0; j <= capacity; j++) {
+            if (i == 0 || j == 0)
+                K[i][j] = 0;
+            else if (weight[i - 1] <= j)
+                K[i][j] = max(profit[i - 1] + K[i - 1][j - weight[i - 1]], K[i - 1][j]);
+            else
+                K[i][j] = K[i - 1][j];
+        }
+    }
+
+    printf("DP Table:\n");
+    for(i = 0; i <= n; i++) {
+        for(j = 0; j <= capacity; j++) {
+            printf("%d ", K[i][j]);
+        }
+        printf("\n");
+    }
+
+    int res = K[n][capacity];
+    int w = capacity;
+    printf("Items included (0-based index): ");
+    for (i = n; i > 0 && res > 0; i--) {
+        if (res == K[i - 1][w])
+            continue;
+        else {
+            printf("%d ", i - 1);
+            res = res - profit[i - 1];
+            w = w - weight[i - 1];
+        }
+    }
+    printf("\n");
+
+    return K[n][capacity];
+}
+
+int main() {
+    int profit[] = {3,4,6,5};
+    int weight[] = {2,3,1,4};
+    int capacity = 8;
+    int n = sizeof(profit) / sizeof(profit[0]);
+    printf("Maximum profit is : %d\n", knapsack(capacity, weight, profit, n));
+    return 0;
+}

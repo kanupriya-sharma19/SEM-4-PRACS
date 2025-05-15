@@ -1,0 +1,55 @@
+#include <stdio.h>
+
+#define MAX_SIZE 1000
+
+int temp[MAX_SIZE]; 
+
+void merge(int arr[], int low, int mid, int high) {
+    int left = low;
+    int right = mid + 1;
+    int k = 0;
+
+    while (left <= mid && right <= high) {
+        if (arr[left] <= arr[right]) {
+            temp[k++] = arr[left++];
+        } else {
+            temp[k++] = arr[right++];
+        }
+    }
+
+    while (left <= mid) {
+        temp[k++] = arr[left++];
+    }
+
+    while (right <= high) {
+        temp[k++] = arr[right++];
+    }
+
+    for (int i = 0; i < k; i++) {
+        arr[low + i] = temp[i];
+    }
+}
+
+void mergeSort(int arr[], int low, int high) {
+    if (low >= high) return;
+    int mid = (low + high) / 2;
+    mergeSort(arr, low, mid);
+    mergeSort(arr, mid + 1, high);
+    merge(arr, low, mid, high);
+}
+
+void printArray(int arr[], int size) {
+    for (int i = 0; i < size; i++)
+        printf("%d ", arr[i]);
+    printf("\n");
+}
+
+int main() {
+    int arr[] = {2,-332,4,565,3,-1,-324,32432,32};
+    int n = sizeof(arr) / sizeof(arr[0]);
+
+    mergeSort(arr, 0, n - 1);
+
+    printArray(arr, n);
+    return 0;
+}

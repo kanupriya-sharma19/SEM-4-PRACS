@@ -1,0 +1,51 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+
+#define MAX 30
+
+int x[MAX];
+int solution_count = 0;
+
+int isSafe(int k, int col) {
+    for (int i = 0; i < k; i++) {
+        if (x[i] == col || abs(x[i] - col) == abs(i - k))
+            return 0;
+    }
+    return 1;
+}
+
+void printSolution(int n) {
+    solution_count++;
+    printf("\nSolution #%d:\n", solution_count);
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
+            if (x[i] == j)
+                printf("Q ");
+            else
+                printf("* ");
+        }
+        printf("\n");
+    }
+}
+
+void NQueens(int k, int n) {
+    for (int col = 0; col < n; col++) {
+        if (isSafe(k, col)) {
+            x[k] = col;
+            if (k == n - 1)
+                printSolution(n);
+            else
+                NQueens(k + 1, n);
+        }
+    }
+}
+
+int main() {
+    int n;
+    printf("Enter the number of queens: ");
+    scanf("%d", &n);
+    NQueens(0, n);
+    printf("\nTotal solutions = %d\n", solution_count);
+    return 0;
+}
