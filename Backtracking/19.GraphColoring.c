@@ -4,10 +4,10 @@
 
 int x[MAX];
 int g[4][4] = {
-    {0, 1, 0, 1},
-    {1, 0, 1, 0},
-    {0, 1, 0, 1},
-    {1, 0, 1, 0}
+ { 0, 1, 1, 1 },
+        { 1, 0, 1, 0 },
+        { 1, 1, 0, 1 },
+        { 1, 0, 1, 0 },
 };
 
 int n = 4;         
@@ -22,12 +22,12 @@ void nextValue(int k) {
         if (x[k] == 0)
             return; 
 
-        for (j = 0; j < n; j++) {
+        for (j = 0; j < k; j++) {
             if (g[k][j] == 1 && x[k] == x[j])
                 break; 
         }
 
-        if (j == n)
+        if (j == k)
             return; 
     }
 }
@@ -66,6 +66,8 @@ int main() {
             break;
         }
     }
-
+if(c==0){
+    printf("No solution");
+}
     return 0;
 }

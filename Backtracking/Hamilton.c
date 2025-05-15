@@ -2,13 +2,9 @@
 #include <stdbool.h>
 
 int G[5][5] = {
-    {0,1,1,0,1},
-    {1,0,1,1,1},
-    {1,1,0,1,0},
-    {0,1,1,0,1},
-    {1,1,0,1,0}
+{0, 1, 0, 1, 0},{1, 0, 1, 1, 1},{0, 1, 0, 0, 1},{1, 1, 0, 0, 1},{0, 1, 1, 1, 0}
 };
-int n = 5;
+int n = 5;int flag=0;
 int x[5] = {0, 0, 0, 0, 0}; 
 
 void place(int k) {
@@ -38,7 +34,7 @@ void Hamiltonian(int k) {
         if(x[k] == 0)
             return;
 
-        if(k == n - 1) {
+        if(k == n - 1) {flag=1;
             printf("Solution:");
             for(int i = 0; i < n; i++) {
                 printf(" %d", x[i]);
@@ -53,5 +49,8 @@ void Hamiltonian(int k) {
 int main() {
     x[0] = 0;  
     Hamiltonian(1);
+    if(flag==0){
+        printf("No solution");
+    }
     return 0;
 }

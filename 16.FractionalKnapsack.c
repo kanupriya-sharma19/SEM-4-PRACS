@@ -11,10 +11,9 @@ void bubbleSort(struct Item items[], int n) {
             double ratio1 = (double)items[i].value / items[i].weight;
             double ratio2 = (double)items[j].value / items[j].weight;
             if (ratio1 < ratio2) {
-              struct Item temp = items[i];
+                struct Item temp = items[i];
                 items[i] = items[j];
                 items[j] = temp;
-
             }
         }
     }
@@ -29,9 +28,18 @@ double fractionalKnapsack(int capacity, struct Item items[], int n) {
         if (currentWeight + items[i].weight <= capacity) {
             totalValue += items[i].value;
             currentWeight += items[i].weight;
+            printf("Took full item with value %d and weight %d\n", items[i].value, items[i].weight);
         } else {
             int remainingWeight = capacity - currentWeight;
-            totalValue += (double)items[i].value / items[i].weight * remainingWeight;
+            double fractionValue = (double)items[i].value / items[i].weight * remainingWeight;
+            totalValue += fractionValue;
+            printf("Took %.2f fraction of item with value %d and weight %d (i.e., %.2f value of %d weight)\n",
+                (double)remainingWeight / items[i].weight,
+                items[i].value,
+                items[i].weight,
+                fractionValue,
+                remainingWeight
+            );
             break;
         }
     }
