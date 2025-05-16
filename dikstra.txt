@@ -1,0 +1,80 @@
+
+DIJKSTRA
+
+#include <stdio.h>
+#include <limits.h>
+
+#define NODES 6
+#define INF INT_MAX
+
+int adj[NODES][NODES] = {
+    
+   {0, 1, 2, 0, 0, 0},
+      {1, 0, 0, 5, 1, 0},
+      {2, 0, 0, 2, 3, 0},
+      {0, 5, 2, 0, 2, 2},
+      {0, 1, 3, 2, 0, 1},
+      {0, 0, 0, 2, 1, 0}
+    
+    };
+
+
+
+struct Vertex {
+    int dist;
+    int par;
+    int visited;
+} V[NODES];
+
+
+void InitializeSingleSource(int start) {
+    int i;
+    for (i = 0; i < NODES; i++) {
+        V[i].dist = INF;
+        V[i].par = -1;
+        V[i].visited = 0;
+    }
+    V[start].dist = 0;
+}
+
+int extractMin() {
+    int i, min = INF, minIndex = -1;
+    for (i = 0; i < NODES; i++) {
+        if (!V[i].visited && V[i].dist < min) {
+            min = V[i].dist;
+            minIndex = i;
+        }
+    }
+    return minIndex;
+}
+
+void relax(int u, int v) {
+    if (V[v].dist > V[u].dist + adj[u][v]) {
+        V[v].dist = V[u].dist + adj[u][v];
+        V[v].par = u;
+    }
+}
+
+void Djikstra(int start) {
+    int i, u, v;
+    InitializeSingleSource(start);
+    for (i = 0; i < NODES; i++) {
+        u = extractMin();
+        V[u].visited = 1;
+        for (v = 0; v < NODES; v++) {
+            if (!V[v].visited && adj[u][v])
+                relax(u, v);
+        }
+    }
+    for (i = 0; i < NODES; i++)
+        if (V[i].par != -1) {
+            printf("%d - %d: %d\n",start, i, V[i].dist);
+        }
+}
+
+int main() {
+    
+    
+    Djikstra( 0);
+    return 0;
+}

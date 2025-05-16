@@ -1,0 +1,81 @@
+
+CHAIN
+
+#include <limits.h>
+#include <stdio.h>
+
+int MatrixChainOrder(int p[], int i, int j)
+{
+	if (i == j)
+		return 0;
+	int k;
+	int min = INT_MAX;
+	int count;
+
+	for (k = i; k < j; k++) 
+	{
+		count = MatrixChainOrder(p, i, k)
+				+ MatrixChainOrder(p, k + 1, j)
+				+ p[i - 1] * p[k] * p[j];
+
+		if (count < min)
+			min = count;
+	}
+
+	return min;
+}
+
+int main()
+{
+	int arr[] = {4,10,3,12,20,7};
+	int N = sizeof(arr) / sizeof(arr[0]);
+
+	printf("Minimum number of multiplications is %d ",
+		MatrixChainOrder(arr, 1, N - 1));
+	getchar();
+	return 0;
+}
+
+
+STRASEENS
+
+#include <stdio.h>
+
+int a[2][2], b[2][2], c[2][2];
+
+void strassen() {
+    int m1, m2, m3, m4, m5, m6, m7;
+    
+    m1 = (a[0][0] + a[1][1]) * (b[0][0] + b[1][1]);
+    m2 = (a[1][0] + a[1][1]) * b[0][0];
+    m3 = a[0][0] * (b[0][1] - b[1][1]);
+    m4 = a[1][1] * (b[1][0] - b[0][0]);
+    m5 = (a[0][0] + a[0][1]) * b[1][1];
+    m6 = (a[1][0] - a[0][0]) * (b[0][0] + b[0][1]);
+    m7 = (a[0][1] - a[1][1]) * (b[1][0] + b[1][1]);
+    
+    c[0][0] = m1 + m4 - m5 + m7;
+    c[0][1] = m3 + m5;
+    c[1][0] = m2 + m4;
+    c[1][1] = m1 - m2 + m3 + m6;
+}
+
+int main() {
+    a[0][0] = 2; a[0][1] = 2;
+    a[1][0] = 2; a[1][1] = 2;
+    
+    b[0][0] = 2; b[0][1] = 2;
+    b[1][0] = 2; b[1][1] = 2;
+
+    strassen();
+
+    printf("Resultant matrix C after Strassen's multiplication:\n");
+    for(int i = 0; i < 2; i++) {
+        for(int j = 0; j < 2; j++) {
+            printf("%d ", c[i][j]);
+        }
+        printf("\n");
+    }
+    
+    return 0;
+}
